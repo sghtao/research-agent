@@ -1,3 +1,6 @@
 [submodule "ROMA"]
 	path = ROMA
 	url = https://github.com/sentient-agi/ROMA.git
+[submodule "ODS"]
+	path = ODS
+	url = https://github.com/sentient-agi/OpenDeepSearch.git
