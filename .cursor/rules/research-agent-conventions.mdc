@@ -1,0 +1,28 @@
+---
+description: Research-agent 요청 표현·도구 선택·ROMA 작업 시 공통 규칙
+alwaysApply: true
+---
+
+# Research Agent — 우리 팀 규칙
+
+## 요청할 때 이렇게 말하면 같은 방향으로 유도된다
+
+- **빠른 웹 한두 번 조회** → “간단히 웹 검색”, “한 번만 검색”, “뉴스/요약 빠르게” → 실행기가 `web_search`를 쓰기 쉬움.
+- **깊은 웹 합성·여러 출처** → “깊게 조사”, “근거 여러 개”, “ODS로”, “deep search” → `deep_search` 쪽.
+- **ODS 일반(가볍게)** → “ODS 가볍게”, “pro 아님”, “빠른 ODS”, “normal 모드” → `deep_search(..., pro_mode=False)`.
+- **ODS 프로(깊게)** → “ODS 풀 파이프라인”, “pro”, “깊은 ODS”, “근거 많이” → `deep_search(..., pro_mode=True)` + 필요 시 `max_sources` 상향(예: 4–8).
+- **수치·코드·백테스트·상관·변동성** → “파이썬으로 돌려”, “계산해”, “차트/백테스트” → 플래너가 `CODE_INTERPRET`를 넣기 쉬움.
+- **한 질문에 웹 경로 하나** → “웹은 한 방식만” 또는 서브목표를 나눠 말하면 `web_search`와 `deep_search`가 겹치지 않게 유도됨.
+
+서브태스크/목표 문장에 괄호로 힌트를 적어도 된다. 예: `(executor: web_search만)`, `(deep_search, pro_mode=false, max_sources=4)`.
+
+## 코드·프롬프트 수정 시 (이 레포)
+
+- **시드**는 `ROMA/prompt_optimization/prompts/seed_prompts/` — 라우팅 설명은 `executor_retrieve_seed.py`, 계획 계약은 `planner_seed.py`와 맞출 것.
+- **프로필**은 `ROMA/config/profiles/` — RETRIEVE에 쓸 툴킷은 YAML에 등록된 것만 호출 가능.
+- **ODS**는 `deep_search(query, pro_mode, max_sources)` 인자로 normal/pro·출처 수를 제어. 기본 `pro_mode` 동작을 바꿀 때는 시드 예시와 한글 요청 규칙을 함께 고칠 것.
+- 변경은 **요청 범위 안에서만** — 넓은 리팩터·무관 파일 수정 금지.
+
+## 사용자에게 답할 때
+
+- 한국어 선호 시 한국어로. 코드 인용은 프로젝트 경로·라인 형식 유지.
