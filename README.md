@@ -1,124 +1,103 @@
-﻿# research-agent
+# Research Agent
 
-`research-agent` is an early-stage, evidence-first research workflow for Web3 financial infrastructure and DeFi risk analysis.
+An early-stage, evidence-first research workflow for Web3 financial infrastructure, on-chain data, and DeFi risk analysis.
 
-## Current Status
+## Status
 
-This repository is an active rebuild. It is not production-ready, does not yet provide a working research agent, and should not be treated as an autonomous analysis, trading, or execution system.
+This repository is an active rebuild. It is not a production-ready agent and does not yet provide automated data collection or completed research workflows.
 
-The current repository contains:
+The project is being developed as a reproducible research tool that helps organize sources, preserve provenance, distinguish evidence from interpretation, and support human-reviewed research notes.
 
-- project documentation for the intended direction
-- a legacy KelpDAO prompt used as prior research context
-- external submodules that are preserved for reference
-- an environment example that documents local configuration placeholders
+## Problem
 
-It does not yet prove automated data collection, benchmark results, production usage, or end-to-end agent capabilities for this project.
+Web3 research often combines protocol documentation, governance discussions, on-chain data, incident reports, market data, and secondary research. These sources differ in authority, timing, and reliability.
 
-## Problem Statement
+This project aims to make the research process more explicit by separating:
 
-Web3 incident and risk research often mixes facts, assumptions, interpretations, market narratives, and incomplete data. For DeFi protocols, bridges, restaking assets, lending markets, and oracle-dependent systems, this makes it hard to reproduce a research note or understand which claims are actually supported by evidence.
-
-This project aims to make that workflow more disciplined. The target workflow should help researchers collect sources, preserve provenance, identify conflicting claims, separate observed facts from analysis, and produce citation-linked notes that are easier for humans to review.
+* observed facts
+* interpretations
+* analytical hypotheses
+* open questions requiring further verification
 
 ## Initial Use Case
 
-The initial use case is Web3 incident and risk analysis. The first reference case is the KelpDAO rsETH / LayerZero incident context, especially how cross-chain asset assumptions, bridge messaging, liquidity, lending markets, and liquidation mechanics can interact during a stressed event.
+The first use case is incident and risk analysis for Web3 financial infrastructure.
 
-The repository should eventually help a researcher ask questions such as:
+The KelpDAO rsETH / LayerZero incident is used as an initial reference case for designing the workflow. It is not treated as a fully automated or complete implementation.
 
-- What happened, according to primary and secondary sources?
-- Which claims are directly supported by cited evidence?
-- Which claims conflict across sources?
-- What facts are still missing or uncertain?
-- What interpretations depend on assumptions rather than observed records?
-- What downstream risk channels should be analyzed before drawing conclusions?
-- How should a research note preserve source links, timestamps, and uncertainty?
+Example questions include:
 
-## Project Scope
+* What verification premise failed in a bridge or oracle incident?
+* Which claims are directly supported by on-chain or primary-source evidence?
+* Which lending markets could receive an affected asset as collateral?
+* What evidence supports or contradicts a proposed risk-transmission path?
+* Which parts of an analysis remain hypotheses rather than observed facts?
 
-Included scope:
+## Intended Workflow
 
-- read-only research workflows by default
-- source collection planning
-- source metadata and provenance tracking
-- claim, evidence, and uncertainty classification
-- separation of facts, interpretations, and hypotheses
-- surfacing conflicting claims
-- citation-linked research notes
-- human review and reproducibility
-- local-first schemas and CLI workflow design
+```text
+Research question
+→ source collection
+→ source metadata and provenance
+→ claim / evidence / uncertainty classification
+→ human review
+→ citation-linked research note
+```
 
-Excluded scope:
+## Scope
 
-- autonomous trading
-- order execution
-- wallet signing, transaction signing, or private-key handling
-- portfolio management
-- market-making or liquidation bots
-- systems that directly turn research output into trading decisions
-- production data pipelines before the project scope is validated
-- dashboards, API servers, databases, scrapers, or multi-agent orchestration before the technical stack is chosen
+### Included
 
-## Facts, Interpretations, and Hypotheses
+* Source metadata and provenance tracking
+* Classification of facts, interpretations, hypotheses, and uncertainty
+* Citation-linked research notes
+* Human review before conclusions
+* Read-only analysis of public documents and public data
+* Reproducible research logs and examples
 
-Research output should clearly label the status of each claim:
+### Excluded
 
-- Facts: claims supported by cited evidence, such as transaction records, protocol documentation, official incident statements, governance posts, or archived public data.
-- Interpretations: analytical conclusions drawn from facts, with assumptions and reasoning stated explicitly.
-- Hypotheses: plausible explanations or risk scenarios that require more verification before they are treated as findings.
-
-The workflow should make uncertainty visible instead of smoothing it away.
-
-## Reference Case: KelpDAO rsETH / LayerZero
-
-The initial reference case is the KelpDAO rsETH / LayerZero incident context. It is useful because it touches several research surfaces at once:
-
-- cross-chain asset representation and bridge messaging
-- liquid staking and restaking asset assumptions
-- lending-market collateral behavior
-- liquidity and oracle-risk questions
-- downstream effects on DeFi integrations
-
-The repository includes a legacy prompt at `prompts/kelp_rsETH_aave_composability.txt`. That file is preserved as historical working material, not as verified project output. See `examples/kelpdao/README.md` for a cleaner reference-case framing.
+* Autonomous trading
+* Order execution
+* Wallet signing
+* Transaction signing
+* Private-key handling
+* Direct trading instructions
+* Automated market actions
+* Any direct connection between research output and trading execution
 
 ## Summer 2026 Roadmap
 
-### Phase 1: Schemas and Local CLI Workflow
+### Phase 1 — Foundation
 
-- define minimal schemas for sources, claims, evidence, uncertainty, and notes
-- design a local read-only CLI workflow
-- create fixtures for the KelpDAO reference case
-- document how provenance should be recorded
-- avoid adding external services until the data model is stable
+* Define schemas for sources, claims, evidence, and uncertainty
+* Build a small local CLI workflow for one research question
+* Store source metadata and execution logs
+* Add basic validation for citation integrity
 
-### Phase 2: Web3 Research MVP
+### Phase 2 — Web3 Research MVP
 
-- implement a small local workflow that turns curated source inputs into structured research notes
-- support manual source entry and citation tracking
-- separate facts, interpretations, hypotheses, and unresolved questions
-- add checks for missing citations and unsupported claims
-- keep the MVP read-only and human-reviewed
+* Support selected protocol documentation, governance discussions, news, and on-chain data inputs
+* Generate structured evidence tables
+* Produce citation-linked markdown research notes
+* Test the workflow with the KelpDAO reference case
 
-### Phase 3: Evaluation, Documentation, and Reproducible Example
+### Phase 3 — Evaluation and Documentation
 
-- create a reproducible KelpDAO reference example
-- document expected inputs and outputs
-- add lightweight evaluation criteria for citation quality, uncertainty labeling, and reproducibility
-- improve contributor documentation
-- prepare a small `v0.1.0` release once the workflow is demonstrable
+* Create a small set of reproducible research questions
+* Define evaluation criteria for citation coverage and unsupported claims
+* Publish architecture notes, limitations, and example runs
+* Prepare a small reproducible v0.1.0 example
 
 ## Development Principles
 
-- Evidence comes first; analysis must point back to sources.
-- Provenance should be preserved at every step.
-- Claims should be labeled by confidence and evidence type.
-- Conflicting claims should be surfaced rather than hidden.
-- The default workflow should be read-only.
-- Humans should review outputs before publication or downstream use.
-- The project should avoid overstating maturity or capability.
-- Technical choices should stay small until the research model is clear.
+* Build small working MVPs before adding complexity
+* Preserve source provenance and uncertainty
+* Keep analytical conclusions reviewable by humans
+* Do not present hypotheses as facts
+* Keep the system read-only by default
+* Do not connect research outputs directly to trading execution
 
 ## Contributing
 
-Issues, questions, and feedback are welcome. Good early contributions include improving documentation, proposing schemas, identifying reproducibility gaps, and suggesting careful reference cases. Please avoid adding production infrastructure or broad agent architecture before the project scope and technical stack are finalized.
+This is an early-stage project. Feedback on research workflow design, provenance tracking, evidence classification, and reproducibility is welcome through issues and discussions.
